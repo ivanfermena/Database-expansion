@@ -80,7 +80,7 @@ create table Invierte
   (DNI		CHAR(8)  not null, 
   NombreE	CHAR(20) not null,
   Cantidad	FLOAT,
-  Tipo		CHAR(10) not null
+  Tipo		CHAR(10) not null,
   PRIMARY KEY (DNI, NombreE, Tipo),
   FOREIGN KEY (DNI) REFERENCES Cliente(DNI),
   FOREIGN KEY (NombreE) REFERENCES Empresa(NombreE)
