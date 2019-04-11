@@ -113,3 +113,35 @@ La explicación del plan es equivalente utilizando _F6_ o _F10_.
 ### Apartado b
 
 La consulta más eficiente es la primera ya que indexa por clave primaria lo cual acarrea una operación de indexación _unique scan_, que es más eficiente que las realizadas en el resto de consultas.
+
+## Semana 10
+
+### Seccion 1
+
+- Coinciden E-Row y A-Row, por lo cual, la estimación es acertada.
+- Los índices utilizados en la segunda consulta almacenan menos tuplas que los índices utilizados en la primera consulta. Por ello, trata con menos bufferes.
+- Mirando las operaciones la más eficiente es la segunda. Mirando las A rows la segunda es más eficiente. Observando los bufferes la segunda es más eficiente. La segunda, en general, parece más eficiente.
+
+### Seccion 2
+
+#### Apartado 1
+
+- Index_name, index_type, table_name, tablespace_name, leaf_blocks, blevel, distinct_keys, num_rows, global_stats.
+- Solo son únicos los índices de clave primaria, ya que solo enlazan con una única posible tupla.
+- Hay pocas tuplas para cada valor posible del índice. Hay pocos valores distintos para la columna _genero_.
+- Son los valores diferentes almacenados para la columna correspondiente al índice. _Clustering _ factor_ evalúa el orden de la tabla índice con respecto al orden de la tabla original; cuenta el número de bloques que se leerán al escanear el índice.
+- Su relación depende de la proporción de tuplas por número de valores distintos de la columna del índice correspondiente.
+
+#### Apartado 2
+
+- Table_name, tablespace_name, num_rows, cluster_name, empty_blocks, avg_space, avg_space_freelist_blocks, table_lock.
+- Los blocks son la unidad de almacenamiento utilizada por Oracle para almacenar todos los datos sobre una base de datos. Cuantas más num_rows, más blocks habrá, ya que un block puede contener una cantidad fija de rows. Avg_row_len es más grande para pelisahora porque sus datos son más pesados.
+
+### Seccion 3
+
+Las estadísticas de la tabla proporcionan: número de filas, número de bloques, tamaño de fila medio, tamaño de muestra y la última vez que fue analizada la tabla.
+Podemos conocer los siguientes parámetros estadísticos para cada una de las columnas de la tabla: número de valores distintos, _low value_, _high value_.
+
+### Sección 4
+
+- Muestra estadísticas del índice de clave primaria de la tabla PELISHIST y de esta misma tabla para nuestro usuario. Estas estadísticas han sido almacenadas anteriormente al ejecutar `dbms_stats.gather_index_stats` y `dbms_stats.gather_table_stats`.
