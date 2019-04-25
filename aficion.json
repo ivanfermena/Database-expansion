@@ -1,0 +1,84 @@
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Atusar gatitos",
+    "Puntuacion": 9.5,
+    "Precio": 40.5,
+    "CantidadGatos": 32,
+    "MarcaComida": "CatF"
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Montar a caballo",
+    "Puntuacion": 6,
+    "Precio": 90.5,
+    "MarcaSilla": "Audi"
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Volar en dragon",
+    "Puntuacion": 10,
+    "Precio": 250,
+    "TipoDragon": ["Fuego", "Piedra"]
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Alimentar lagartos",
+    "Puntuacion": 8,
+    "Precio": 50,
+    "ColorEscamas": "Rojo"
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Hacer volar un Aguila",
+    "Puntuacion": 7,
+    "Precio": 25,
+    "TipoAguila": ["Real","Aguilucho"]
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Nadar entre tiburones",
+    "Puntuacion": 8.5,
+    "Precio": 100,
+    "CantidadTiburones": 26
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Salvar a Willy",
+    "Puntuacion": 7.5,
+    "Precio": 75,
+    "NombreDelfin": "Alf"
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Engañar a un topo",
+    "Puntuacion": 8.4,
+    "Precio": 15,
+    "NumeroMadriguera": 23
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Platanos para monos",
+    "Puntuacion": 7.3,
+    "Precio": 50,
+    "NombreMono": "Boris",
+    "NumeroPlatanos": 6
+}
+{
+    "Tema": "Animales",
+    "Apodo": "Ani",
+    "Nombre": "Acariciar lomo de suricato",
+    "Puntuacion": 10,
+    "Precio": 320,
+    "ActitudSuricato": ["Tranquila", "Cariñosa","Amable"]
+}
+
+
