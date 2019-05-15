@@ -1,18 +1,12 @@
+// Configuracion inicial de la base de datos
+// lanzar en Entorno Mongo
 use pracmongo
-
-
 
 mongorestore --collection aficiones --db pracmongo C:\hlocal\prac-MongoDB-18-19-CV\dump-para-empezar-prac\aficiones.bson
 
-
-
 db.aficiones.count();
 
-
-
 db.aficiones.findOne();
-
-
 
 db.aficiones.insert({
 
@@ -32,90 +26,30 @@ db.aficiones.insert({
 
         });
 
-
-
-// mongoimport --db pracmongo --collection aficiones --drop --file "file"
-
-        
+// mongoimport --db pracmongo --collection aficiones --drop --file "file" 
 
 db.aficiones.find( {"Tema": "Animales"} );
 
-
-
-
-
-
-
 db.aficiones.find( {"Apodo": "Ani"} );
-
-
-
-
-
-
 
 db.aficiones.find({"Precio":{$gte:10}},{_id:0});
 
-
-
-
-
 db.aficiones.find({"Precio":{$lt:60}},{_id:0});
-
-
-
-
-
-
 
 db.aficiones.find({"Precio":{$gte:10}},{_id:0, Puntuacion:0, Precio:0});
 
-
-
-
-
-
-
 // Minimo de precio
-
-
-
-
-
-
 
 db.aficiones.find().sort({"Precio":1}).limit(1);
 
-
-
-
-
-
-
 db.aficiones.find().sort({"Precio":-1}).limit(1);
 
-
-
-
-
 // APARTADO 3
-
-
-
 // Apartado a 
-
-
-
 // Consulta 1
-
 db.aficiones.find({Puntuacion:{$gte:9}},{_id:0});
 
-
-
-
-
 // Consulta 2
-
 db.aficiones.aggregate([
 
     { $match: {Puntuacion: {$gte:9}}},
@@ -125,13 +59,9 @@ db.aficiones.aggregate([
     ]);
 
 // Comprobacion de la query
-
 db.aficiones.find( {$and:[ {"Tema": "Rugby"}, {Puntuacion:{$gte:9}} ] });
 
-
-
 // Consulta 3
-
 db.aficiones.aggregate([
 
     { $match: { Puntuacion: {$in: [10,9,8,7,6,5]}}},
@@ -143,19 +73,15 @@ db.aficiones.aggregate([
  ]);
 
 
-
 // Consulta 4
-
 db.aficiones.aggregate([
 
     {$group: {_id: "$Tema", Apodos: {$push:"$Apodo"}}}
 
     ]);
-
     
 
 // Apartado b 
-
 var x = db.aficiones.aggregate([
 
     {$group: {_id: "$Tema", Apodos: {$push:"$Apodo"}, Nombres: {$push:"$Nombre"} }}
@@ -306,3 +232,98 @@ db.apartado5.insert(
 // 5.Extra
 // - Conviene desnormalizar ya que asi en una sola consulta obtendriamos todas las propiedades del objeto en cuestion
 //      ganando en eficiencia.
+
+// Apartado 6
+//
+// Apartado B
+db.aficiones.find(
+    {
+        Nombre: "MotoGP"
+    }
+).forEach(function(element) {
+    db.collection.update(
+        { "_id": element._id }, 
+        { "$set": { "Nombre": element.NombreEquipo, "Puntuacion": element.Puntuacón, "Precio":100 }, "$unset": { "NombreEquipo":1, "Puntuacón":1} }
+    );
+});
+db.aficiones.find(
+    {
+        Nombre: "Ajedrez"
+    }
+).forEach(function(element) {
+    db.collection.update(
+        { "_id": element._id }, 
+        { "$set": { "Nombre": element.Nombre + element.Apellidos, "Precio":100 }, "$unset": { "Apellidos":1} }
+    );
+});
+// Apartado C
+db.createCollection( "animales",
+   { validator: { $and:
+      [
+         { Tema: { $type: "string", "$exists": true } },
+         { Apodo: { $type: "string", "$exists": true } },
+         { Nombre: {$type: "string", "$exists": true } },
+         { Precio: {$type: "double", "$exists": true } },
+         { Tipo: {$type: "string", $in: [ "Mamifero", "Reptil", "Pez", "Ave", "Anfibios", "Invertebrado" ] } }
+       ] } 
+    }
+   );
+db.animales.insert( // Debe ser aceptado
+{
+    "Tema" : "Animales",
+    "Apodo" : "Gato",
+    "Nombre" : "Miau",
+    "Precio": 8.5,
+    "Tipo": "Mamifero"
+}
+);
+db.animales.insert( // Debe ser rechazado
+{
+    "Tema" : "Animales",
+    "Apodo" : "Gato",
+    "Nombre" : "Miau",
+    "Tipo": "Mamifero"
+}
+);
+
+// Apartado D
+db.createCollection("solodatos");
+db.createCollection("soloaficiones");
+db.aficiones.find().forEach(element => {
+    // esto da todas las claves del documento element -> for (key in element) print(key);
+    db.solodatos.insert(
+        {
+            _id: element._id
+            
+        }
+    );
+    db.soloaficiones.insert(
+        {
+            _id: element._id,
+            Tema: element.Tema,
+            Nombre: element.Nombre,
+            Apodo: element.Apodo,
+            Precio: element.Precio
+        }
+    );
+});
+
+// Apartado E
+db.solodatos.find().array.forEach(element => {
+    var x = db.soloaficiones.findOne( { "_id": element._id });
+    print(element)
+    print(x)
+});
+
+// Apartado F
+db.solodatos.aggregate([
+    {
+      $lookup:
+        {
+          from: "soloaficiones",
+          localField: "_id",
+          foreignField: "_id",
+          as: "detalles"
+        }
+   }
+ ])
